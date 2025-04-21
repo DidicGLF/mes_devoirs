@@ -10,9 +10,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //Supprimer bandeau debug
       home: Scaffold(
-        body: Center( 
+        body: Center(
+          //Menu page d'accueil
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
