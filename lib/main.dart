@@ -9,10 +9,33 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+        body: Center( 
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  ElevatedButton(onPressed: (){}, child: const Icon(Icons.edit)),
+                  Text('Saisie')
+                ],
+              ),
+              Column(
+                children: [
+                  ElevatedButton(onPressed: (){}, child: const Icon(Icons.settings)),
+                  Text('Gestion')
+                ],
+              ),
+              Column(
+                children: [
+                  ElevatedButton(onPressed: (){}, child: const Icon(Icons.calendar_month)),
+                  Text('E.D.T.')
+                ],
+              )
+            ],
+          )
         ),
       ),
     );
