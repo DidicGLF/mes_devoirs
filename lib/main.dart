@@ -13,32 +13,33 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, //Supprimer bandeau debug
       home: Scaffold(
         body: Center(
-          //Menu page d'accueil
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  ElevatedButton(onPressed: (){}, child: const Icon(Icons.edit)),
-                  Text('Saisie')
-                ],
-              ),
-              Column(
-                children: [
-                  ElevatedButton(onPressed: (){}, child: const Icon(Icons.settings)),
-                  Text('Gestion')
-                ],
-              ),
-              Column(
-                children: [
-                  ElevatedButton(onPressed: (){}, child: const Icon(Icons.calendar_month)),
-                  Text('E.D.T.')
-                ],
-              )
-            ],
+          child: Container(
+            width: 500,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Tooltip(
+                  message: 'Saisie des devoirs',
+                  margin: const EdgeInsets.all(15),
+                  child:ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(fixedSize: const Size(100, 70)), child: const Icon(Icons.edit)),
+                ),
+                
+                Tooltip(
+                  message: 'Gestion',
+                  margin: const EdgeInsets.all(15),
+                  child:ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(fixedSize: const Size(100, 70)), child: Icon(Icons.settings)),
+                ),
+
+                 Tooltip(
+                  message: 'Emploi du temps',
+                  margin: const EdgeInsets.all(15),
+                  child:ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(fixedSize: const Size(100, 70)), child: Icon(Icons.calendar_month))
+                )
+              ],
+            ),
           )
-        ),
-      ),
-    );
+          ),
+          ),
+        );
   }
 }
