@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, //Supprimer bandeau debug
       home: Scaffold(
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: 500,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
