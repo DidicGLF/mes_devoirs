@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Saisie extends StatefulWidget{
@@ -7,7 +8,8 @@ class Saisie extends StatefulWidget{
 
 class _saisieState extends State<Saisie> {
      //const Saisie({super.key});  
-  Color _color = Colors.grey;
+  Color _color = Colors.transparent;
+   TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +20,7 @@ class _saisieState extends State<Saisie> {
           spacing: 20,
           children: [
            Container(
-              padding: EdgeInsets.all(10),
-              color: _color,//const Color.fromRGBO(158, 158, 158, 1),
+              padding: EdgeInsets.all(10),              
               child: Row(
                 children: [
                   Spacer(),
@@ -62,10 +63,40 @@ class _saisieState extends State<Saisie> {
                 ],
               ),
             ),
-            
+
+            //Saisie des devoirs
             Container(
+              padding: EdgeInsets.all(10), 
+              color: _color,//const Color.fromRGBO(158, 158, 158, 1),
+              child: Row(
+                children: [
+                  Spacer(),
+                  Text("Date : "),
+                  Spacer(),
+                  Text("Type : "),
+                  Spacer(),
+                  Text("Chercher"),
+                  Spacer(),
+                  Text("Contenu : "),
+                  Spacer(),
+                  Text("Contenu"),
+                  Spacer(),
+                  ElevatedButton(onPressed: (){}, child: Text("Valider")),
+                  Spacer()
+                ],
+              ),
+            ),
+            
+
+            //Liste des devoirs
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(9)),
+                border: Border.all(color: Colors.blue, width: 2),
+                color: const Color.fromARGB(255, 219, 213, 213),
+              ),
               padding: EdgeInsets.all(10),
-              color: const Color.fromARGB(255, 219, 213, 213),
+              margin: EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 children: [
                   Spacer(),
@@ -88,8 +119,13 @@ class _saisieState extends State<Saisie> {
             ),
 
             Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(9)),
+                border: Border.all(color: Colors.green, width: 2),
+                color: const Color.fromARGB(255, 219, 213, 213),
+              ),
               padding: EdgeInsets.all(10),
-               color: const Color.fromARGB(255, 219, 213, 213),
+              margin: EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 children: [
                   Spacer(),
