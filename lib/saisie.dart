@@ -66,8 +66,12 @@ class _saisieState extends State<Saisie> {
 
             //Saisie des devoirs
             Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(9)),
+                color: _color,//const Color.fromRGBO(158, 158, 158, 1),
+              ),
               padding: EdgeInsets.all(10), 
-              color: _color,//const Color.fromRGBO(158, 158, 158, 1),
+              margin: EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 children: [
                   Spacer(),
