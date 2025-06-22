@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mes_devoirs/Screen/saisie.dart';
-import 'package:mes_devoirs/Screen/gestion.dart';
-import 'package:mes_devoirs/Screen/edt.dart';
+import 'package:mes_devoirs/Screen/screen_saisie.dart';
+import 'package:mes_devoirs/Screen/screen_gestion.dart';
+import 'package:mes_devoirs/Screen/screen_edt.dart';
 
 void main() {
   runApp(const MaterialApp(home: MainApp()));
