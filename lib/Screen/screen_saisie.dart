@@ -20,6 +20,7 @@ class _saisieState extends State<Saisie> {
             Container(
               padding: EdgeInsets.all(10),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Spacer(),
                   ElevatedButton(
@@ -192,43 +193,7 @@ class _saisieState extends State<Saisie> {
                   Spacer(flex: 1),
                   Icon(Icons.edit),
                   Spacer(flex: 1),
-                  Icon(Icons.delete),
-                  Spacer(),
-                ],
-              ),
-            ),
-
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.green.shade400, Colors.green.shade100],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(9)),
-                border: Border.all(color: Colors.green, width: 2),
-                color: const Color.fromARGB(255, 219, 213, 213),
-              ),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(right: 20, left: 20),
-              child: Row(
-                children: [
-                  Spacer(),
-                  Text("14/10/2024"),
-                  Spacer(flex: 1),
-                  Text("Lun 4 nov"),
-                  Spacer(flex: 1),
-                  Text(
-                    "DS n°2 : Calcul littéral, transformation, puissances, exposant négatif, scratch en F303",
-                  ),
-                  Spacer(flex: 1),
-                  Text("3°1"),
-                  Spacer(flex: 1),
-                  Checkbox(value: true, onChanged: (bool? value) {}),
-                  Spacer(flex: 1),
-                  Icon(Icons.edit),
-                  Spacer(flex: 1),
-                  Icon(Icons.delete),
+                  Icon(Icons.delete, color: Colors.red),
                   Spacer(),
                 ],
               ),

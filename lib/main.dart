@@ -34,6 +34,7 @@ class MainApp extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(100, 70),
+                      iconSize: 30,
                     ),
                     child: const Icon(Icons.edit),
                   ),
@@ -53,6 +54,7 @@ class MainApp extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(100, 70),
+                      iconSize: 30,
                     ),
                     child: Icon(Icons.settings),
                   ),
@@ -70,6 +72,7 @@ class MainApp extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(100, 70),
+                      iconSize: 30,
                     ),
                     child: Icon(Icons.calendar_month),
                   ),
