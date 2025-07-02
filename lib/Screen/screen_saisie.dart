@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:mes_devoirs/Classes/devoir.dart';
 
 class Saisie extends StatefulWidget {
   @override
-  _saisieState createState() => _saisieState();
+  saisieState createState() => saisieState();
 }
 
-class _saisieState extends State<Saisie> {
+List<Devoir> devoirs = [
+  Devoir(
+    dateCreation: "29 juin 2025",
+    dateEcheance: "30 juin 2025",
+    contenu: "Réviser sa leçon sur les triangles",
+    classe: "6A",
+    fait: true,
+  ),
+  Devoir(
+    dateCreation: "29 juin 2025",
+    dateEcheance: "30 juin 2025",
+    contenu: "Réviser sa leçon sur les triangles",
+    classe: "6A",
+    fait: false,
+  ),
+];
+
+class saisieState extends State<Saisie> {
   //const Saisie({super.key});
+
   Color _color = Colors.transparent;
+  Color checkBoxFait = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
@@ -139,22 +159,59 @@ class _saisieState extends State<Saisie> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(9)),
-                color: _color, //const Color.fromRGBO(158, 158, 158, 1),
+                border: Border.all(color: _color, width: 2),
+                gradient: LinearGradient(
+                  colors: [_color, _color],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(5),
               margin: EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 children: [
                   Spacer(),
-                  Text("Date : "),
-                  Spacer(),
-                  Text("Type : "),
-                  Spacer(),
-                  Text("Chercher"),
-                  Spacer(),
+                  Text("Date de création : "),
+                  Spacer(flex: 1),
+                  SizedBox(
+                    width: 150,
+                    height: 40,
+                    child: TextField(
+                      style: const TextStyle(fontSize: 12),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Saisissez une date",
+                      ),
+                    ),
+                  ),
+                  Spacer(flex: 1),
+                  Text("Échéance : "),
+                  Spacer(flex: 1),
+                  SizedBox(
+                    width: 150,
+                    height: 40,
+                    child: TextField(
+                      style: const TextStyle(fontSize: 12),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Saisissez une date",
+                      ),
+                    ),
+                  ),
+                  Spacer(flex: 1),
                   Text("Contenu : "),
-                  Spacer(),
-                  Text("Contenu"),
+                  Spacer(flex: 1),
+                  SizedBox(
+                    width: 300,
+                    height: 40,
+                    child: TextField(
+                      style: const TextStyle(fontSize: 12),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Saisissez le contenu",
+                      ),
+                    ),
+                  ),
                   Spacer(),
                   ElevatedButton(onPressed: () {}, child: Text("Valider")),
                   Spacer(),
@@ -163,40 +220,67 @@ class _saisieState extends State<Saisie> {
             ),
 
             //Liste des devoirs
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade400, Colors.blue.shade100],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(9)),
-                border: Border.all(color: Colors.blue, width: 2),
-                color: const Color.fromARGB(255, 219, 213, 213),
-              ),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(right: 20, left: 20),
-              child: Row(
-                children: [
-                  Spacer(),
-                  Text("14/10/2024"),
-                  Spacer(flex: 1),
-                  Text("Lun 4 nov"),
-                  Spacer(flex: 1),
-                  Text(
-                    "DS n°2 : Calcul littéral, transformation, puissances, exposant négatif, scratch en F303",
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: devoirs.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [_color, _color],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(9)),
+                    border: Border.all(color: _color, width: 2),
+                    color: const Color.fromARGB(255, 219, 213, 213),
                   ),
-                  Spacer(flex: 1),
-                  Text("3°1"),
-                  Spacer(flex: 1),
-                  Checkbox(value: true, onChanged: (bool? value) {}),
-                  Spacer(flex: 1),
-                  Icon(Icons.edit),
-                  Spacer(flex: 1),
-                  Icon(Icons.delete, color: Colors.red),
-                  Spacer(),
-                ],
-              ),
+                  padding: EdgeInsets.all(2),
+                  margin: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    right: 20,
+                    left: 20,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.check, color: checkBoxFait),
+                      Spacer(),
+                      Text(devoirs[index].dateCreation),
+                      Spacer(),
+                      Text(devoirs[index].dateEcheance),
+                      Spacer(),
+                      Text(devoirs[index].contenu),
+                      Spacer(),
+                      Checkbox(
+                        value: devoirs[index].fait,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            devoirs[index].fait = newValue!;
+                          });
+                          if (newValue == true) {
+                            checkBoxFait = Colors.white;
+                          } else {
+                            checkBoxFait = Colors.transparent;
+                          }
+                        },
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {},
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        color: Colors.red,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),

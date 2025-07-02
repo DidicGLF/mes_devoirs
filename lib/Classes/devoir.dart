@@ -1,17 +1,15 @@
 class Devoir {
-  String id;
-  String titre;
+  bool fait;
+  String dateCreation;
+  String dateEcheance;
   String contenu;
-  DateTime dateCreation;
-  DateTime dateEcheance;
-  String classeId;
+  String classe;
 
   Devoir({
-    required this.id,
-    required this.titre,
-    required this.contenu,
+    required this.fait,
     required this.dateCreation,
     required this.dateEcheance,
-    required this.classeId,
+    required this.contenu,
+    required this.classe,
   });
 }
