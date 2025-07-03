@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:mes_devoirs/Classes/devoir.dart';
+import 'package:mes_devoirs/Classes/homework.dart';
 
-class Saisie extends StatefulWidget {
+class InputHomework extends StatefulWidget {
   @override
-  saisieState createState() => saisieState();
+  inputState createState() => inputState();
 }
 
-//Liste exemple pour remplir le listview
-List<Devoir> devoirs = [
-  Devoir(
-    dateCreation: "29 juin 2025",
-    dateEcheance: "30 juin 2025",
+//Sample list to fill the listview
+List<Homework> homework = [
+  Homework(
+    creationDate: "29 juin 2025",
+    deadline: "30 juin 2025",
     contenu: "Réviser sa leçon sur les triangles",
-    classe: "6A",
-    fait: true,
+    classroom: "6A",
+    done: true,
   ),
-  Devoir(
-    dateCreation: "29 juin 2025",
-    dateEcheance: "30 juin 2025",
+  Homework(
+    creationDate: "29 juin 2025",
+    deadline: "30 juin 2025",
     contenu: "Réviser sa leçon sur les triangles",
-    classe: "6A",
-    fait: false,
+    classroom: "6A",
+    done: false,
   ),
 ];
 
-class saisieState extends State<Saisie> {
+class inputState extends State<InputHomework> {
   Color _color = Colors.transparent;
-  Color checkBoxFait = Colors.transparent;
+  Color checkBoxDone = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +154,7 @@ class saisieState extends State<Saisie> {
               ),
             ),
 
-            //Saisie des devoirs
+            //Homework input
             Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(9)),
@@ -228,11 +228,11 @@ class saisieState extends State<Saisie> {
               ),
             ),
 
-            //Liste des devoirs
+            //Homework list
             ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: devoirs.length,
+              itemCount: homework.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   decoration: BoxDecoration(
@@ -254,24 +254,24 @@ class saisieState extends State<Saisie> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.check, color: checkBoxFait),
+                      Icon(Icons.check, color: checkBoxDone),
                       Spacer(),
-                      Text(devoirs[index].dateCreation),
+                      Text(homework[index].creationDate),
                       Spacer(),
-                      Text(devoirs[index].dateEcheance),
+                      Text(homework[index].deadline),
                       Spacer(),
-                      Text(devoirs[index].contenu),
+                      Text(homework[index].contenu),
                       Spacer(),
                       Checkbox(
-                        value: devoirs[index].fait,
+                        value: homework[index].done,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            devoirs[index].fait = newValue!;
+                            homework[index].done = newValue!;
                           });
                           if (newValue == true) {
-                            checkBoxFait = Colors.white;
+                            checkBoxDone = Colors.white;
                           } else {
-                            checkBoxFait = Colors.transparent;
+                            checkBoxDone = Colors.transparent;
                           }
                         },
                       ),

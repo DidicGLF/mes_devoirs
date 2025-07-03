@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, //Supprimer bandeau debug
+      debugShowCheckedModeBanner: false, //Hide debug banner
       home: Scaffold(
         appBar: AppBar(title: const Text("Accueil")),
         body: Center(
@@ -29,7 +29,9 @@ class MainApp extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Saisie()),
+                        MaterialPageRoute(
+                          builder: (context) => InputHomework(),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
