@@ -6,6 +6,7 @@ class Saisie extends StatefulWidget {
   saisieState createState() => saisieState();
 }
 
+//Liste exemple pour remplir le listview
 List<Devoir> devoirs = [
   Devoir(
     dateCreation: "29 juin 2025",
@@ -24,8 +25,6 @@ List<Devoir> devoirs = [
 ];
 
 class saisieState extends State<Saisie> {
-  //const Saisie({super.key});
-
   Color _color = Colors.transparent;
   Color checkBoxFait = Colors.transparent;
 
@@ -46,7 +45,7 @@ class saisieState extends State<Saisie> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _color = Colors.blue;
+                        _color = Colors.blue.shade400;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -64,7 +63,7 @@ class saisieState extends State<Saisie> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _color = Colors.green;
+                        _color = Colors.green.shade400;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -82,7 +81,7 @@ class saisieState extends State<Saisie> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _color = Colors.red;
+                        _color = Colors.red.shade400;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -100,7 +99,7 @@ class saisieState extends State<Saisie> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _color = Colors.yellow;
+                        _color = Colors.yellow.shade400;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -118,7 +117,7 @@ class saisieState extends State<Saisie> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _color = Colors.pink;
+                        _color = Colors.pink.shade400;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -136,7 +135,7 @@ class saisieState extends State<Saisie> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _color = Colors.purple;
+                        _color = Colors.purple.shade400;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -159,7 +158,7 @@ class saisieState extends State<Saisie> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(9)),
-                border: Border.all(color: _color, width: 2),
+                border: Border.all(color: Colors.black, width: 1),
                 gradient: LinearGradient(
                   colors: [_color, _color],
                   begin: Alignment.topLeft,
@@ -170,16 +169,18 @@ class saisieState extends State<Saisie> {
               margin: EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 children: [
-                  Spacer(),
                   Text("Date de création : "),
                   Spacer(flex: 1),
                   SizedBox(
-                    width: 150,
+                    width: 200,
                     height: 40,
                     child: TextField(
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.calendar_month),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                         hintText: "Saisissez une date",
                       ),
                     ),
@@ -188,11 +189,15 @@ class saisieState extends State<Saisie> {
                   Text("Échéance : "),
                   Spacer(flex: 1),
                   SizedBox(
-                    width: 150,
+                    width: 200,
                     height: 40,
                     child: TextField(
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.alarm),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                         border: OutlineInputBorder(),
                         hintText: "Saisissez une date",
                       ),
@@ -207,6 +212,10 @@ class saisieState extends State<Saisie> {
                     child: TextField(
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.notes),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                         border: OutlineInputBorder(),
                         hintText: "Saisissez le contenu",
                       ),
