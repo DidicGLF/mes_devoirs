@@ -13,3 +13,24 @@ class Homework {
     required this.classroom,
   });
 }
+
+List<Homework> getHomeworkList() {
+  // TODO: implement populateHomeworkList
+  List<Homework> homework = [
+    Homework(
+      creationDate: "29 juin 2025",
+      deadline: "30 juin 2025",
+      contenu: "Réviser sa leçon sur les triangles",
+      classroom: "6A",
+      done: true,
+    ),
+    Homework(
+      creationDate: "29 juin 2025",
+      deadline: "30 juin 2025",
+      contenu: "Réviser sa leçon sur les triangles",
+      classroom: "6A",
+      done: false,
+    ),
+  ];
+  return homework;
+}

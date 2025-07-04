@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mes_devoirs/Classes/homework.dart';
 
-class InputHomework extends StatefulWidget {
+class GetHomework extends StatefulWidget {
   @override
   inputState createState() => inputState();
 }
 
 //Sample list to fill the listview
-List<Homework> homework = [
-  Homework(
-    creationDate: "29 juin 2025",
-    deadline: "30 juin 2025",
-    contenu: "Réviser sa leçon sur les triangles",
-    classroom: "6A",
-    done: true,
-  ),
-  Homework(
-    creationDate: "29 juin 2025",
-    deadline: "30 juin 2025",
-    contenu: "Réviser sa leçon sur les triangles",
-    classroom: "6A",
-    done: false,
-  ),
-];
+List<Homework> homework = getHomeworkList();
 
-class inputState extends State<InputHomework> {
+class inputState extends State<GetHomework> {
   Color _color = Colors.transparent;
   Color checkBoxDone = Colors.transparent;
 

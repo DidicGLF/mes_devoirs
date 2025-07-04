@@ -29,9 +29,7 @@ class MainApp extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => InputHomework(),
-                        ),
+                        MaterialPageRoute(builder: (context) => GetHomework()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
