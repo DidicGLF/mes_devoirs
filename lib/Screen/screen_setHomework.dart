@@ -39,29 +39,38 @@ class InputState extends State<GetHomework> {
                 shrinkWrap: true,
                 itemCount: classroom.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _color = classroom[index].color;
-                      _classroomId = classroom[index].classroomId;
-                    },
-                    child: Card(
-                      elevation: 3,
-                      color: classroom[index].color,
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              classroom[index].name,
-                            ),
-                            Text(
-                              style: TextStyle(fontSize: 12),
-                              classroom[index].classroomSize.toString(),
-                            ),
-                          ],
+                  return Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: InkWell(
+                      onTap: () {
+                        _color = classroom[index].color;
+                        _classroomId = classroom[index].classroomId;
+                      },
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(9),
+                          ),
+                          backgroundColor: classroom[index].color,
+                          foregroundColor: Colors.black,
                         ),
+                        child: Padding(
+                          padding: EdgeInsets.all(0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                classroom[index].name,
+                              ),
+                              Text(
+                                style: TextStyle(fontSize: 12),
+                                classroom[index].classroomSize.toString(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        onPressed: () {},
                       ),
                     ),
                   );
