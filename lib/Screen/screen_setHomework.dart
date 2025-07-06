@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mes_devoirs/Classes/homework.dart';
 
@@ -15,9 +14,9 @@ class InputState extends State<GetHomework> {
   Color checkBoxDone = Colors.black;
 
   // Create textfield controller
-  TextEditingController _homeworkCreationDate = TextEditingController();
-  TextEditingController _homeworkDeadline = TextEditingController();
-  TextEditingController _homeworkContenu = TextEditingController();
+  final TextEditingController _homeworkCreationDate = TextEditingController();
+  final TextEditingController _homeworkDeadline = TextEditingController();
+  final TextEditingController _homeworkContenu = TextEditingController();
 
   // Variable for new homework
   String homeworkClassroom = "";
@@ -281,7 +280,7 @@ class InputState extends State<GetHomework> {
                       Spacer(),
                       Text(homework[index].deadline),
                       Spacer(),
-                      Expanded(child: Text(homework[index].contenu), flex: 6),
+                      Expanded(flex: 6, child: Text(homework[index].contenu)),
                       Spacer(),
                       Checkbox(
                         value: homework[index].done,
