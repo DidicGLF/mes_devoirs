@@ -21,9 +21,6 @@ class InputState extends State<GetHomework> {
   final TextEditingController _homeworkDeadline = TextEditingController();
   final TextEditingController _homeworkContenu = TextEditingController();
 
-  // Variable for new homework
-  String homeworkClassroom = "";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,13 +61,18 @@ class InputState extends State<GetHomework> {
                                 classroom[index].name,
                               ),
                               Text(
-                                style: TextStyle(fontSize: 12),
-                                classroom[index].classroomSize.toString(),
+                                style: TextStyle(fontSize: 10),
+                                "Effectif : ${classroom[index].classroomSize.toString()}",
                               ),
                             ],
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _color = classroom[index].color;
+                            _classroomId = classroom[index].classroomId;
+                          });
+                        },
                       ),
                     ),
                   );
@@ -171,6 +173,7 @@ class InputState extends State<GetHomework> {
                       _homeworkCreationDate.clear();
                       _homeworkDeadline.clear();
                       _homeworkContenu.clear();
+                      _classroomId = -1;
                     },
                     child: Text("Valider"),
                   ),
@@ -193,14 +196,14 @@ class InputState extends State<GetHomework> {
                     bottom: 5,
                   ),
                   elevation: 3,
-                  color: _color,
+                  color: classroom[homework[index].classroomId].color,
                   child: Row(
                     children: [
                       Expanded(child: Icon(Icons.check, color: checkBoxDone)),
                       Expanded(child: Text(homework[index].creationDate)),
                       Expanded(child: Text(homework[index].deadline)),
                       Expanded(flex: 6, child: Text(homework[index].contenu)),
-                      Text(homework[index].classroomId.toString()),
+                      Text(classroom[homework[index].classroomId].name),
                       Spacer(),
                       Expanded(
                         child: Row(

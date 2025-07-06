@@ -20,15 +20,22 @@ List<Homework> getHomeworkList() {
       creationDate: "29 juin 2025",
       deadline: "30 juin 2025",
       contenu: "Réviser sa leçon sur les triangles",
-      classroomId: 1,
+      classroomId: 0,
       done: true,
     ),
     Homework(
       creationDate: "29 juin 2025",
       deadline: "30 juin 2025",
       contenu: "Réviser sa leçon sur les triangles",
-      classroomId: 2,
+      classroomId: 1,
       done: false,
+    ),
+    Homework(
+      creationDate: "29 juin 2025",
+      deadline: "30 juin 2025",
+      contenu: "Réviser sa leçon sur les triangles",
+      classroomId: 2,
+      done: true,
     ),
     Homework(
       creationDate: "29 juin 2025",
@@ -49,13 +56,6 @@ List<Homework> getHomeworkList() {
       deadline: "30 juin 2025",
       contenu: "Réviser sa leçon sur les triangles",
       classroomId: 5,
-      done: true,
-    ),
-    Homework(
-      creationDate: "29 juin 2025",
-      deadline: "30 juin 2025",
-      contenu: "Réviser sa leçon sur les triangles",
-      classroomId: 6,
       done: false,
     ),
   ];
