@@ -16,8 +16,9 @@ class InputState extends State<GetHomework> {
   Color checkBoxDone = Colors.black;
   int _classroomId = -1;
 
-  // Create textfield controller
+  // Create textfield controller + focusNode
   final TextEditingController _homeworkCreationDate = TextEditingController();
+  final FocusNode _homeworkCreationDateFocusNode = FocusNode();
   final TextEditingController _homeworkDeadline = TextEditingController();
   final TextEditingController _homeworkContenu = TextEditingController();
 
@@ -98,6 +99,7 @@ class InputState extends State<GetHomework> {
                     height: 40,
                     child: TextField(
                       controller: _homeworkCreationDate,
+                      focusNode: _homeworkCreationDateFocusNode,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.calendar_month),
@@ -151,7 +153,8 @@ class InputState extends State<GetHomework> {
                     onPressed: () {
                       if (_homeworkCreationDate.text == "" ||
                           _homeworkDeadline.text == "" ||
-                          _homeworkContenu.text == "") {
+                          _homeworkContenu.text == "" ||
+                          _classroomId == -1) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("Veuillez remplir tous les champs"),
@@ -169,11 +172,11 @@ class InputState extends State<GetHomework> {
                         setState(() {
                           homework.add(newHomework);
                         });
+                        _homeworkCreationDateFocusNode.requestFocus();
                       }
                       _homeworkCreationDate.clear();
                       _homeworkDeadline.clear();
                       _homeworkContenu.clear();
-                      _classroomId = -1;
                     },
                     child: Text("Valider"),
                   ),
@@ -183,70 +186,72 @@ class InputState extends State<GetHomework> {
             ),
 
             //Homework list
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: homework.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  margin: EdgeInsets.only(
-                    right: 20,
-                    left: 20,
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  elevation: 3,
-                  color: classroom[homework[index].classroomId].color,
-                  child: Row(
-                    children: [
-                      Expanded(child: Icon(Icons.check, color: checkBoxDone)),
-                      Expanded(child: Text(homework[index].creationDate)),
-                      Expanded(child: Text(homework[index].deadline)),
-                      Expanded(flex: 6, child: Text(homework[index].contenu)),
-                      Text(classroom[homework[index].classroomId].name),
-                      Spacer(),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Checkbox(
-                                value: homework[index].done,
-                                onChanged: (bool? newValue) {
-                                  setState(() {
-                                    homework[index].done = newValue!;
-                                  });
-                                  if (newValue == true) {
-                                    checkBoxDone = Colors.black;
-                                  } else {
-                                    checkBoxDone = Colors.transparent;
-                                  }
-                                },
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: homework.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    margin: EdgeInsets.only(
+                      right: 20,
+                      left: 20,
+                      top: 5,
+                      bottom: 5,
+                    ),
+                    elevation: 3,
+                    color: classroom[homework[index].classroomId].color,
+                    child: Row(
+                      children: [
+                        Expanded(child: Icon(Icons.check, color: checkBoxDone)),
+                        Expanded(child: Text(homework[index].creationDate)),
+                        Expanded(child: Text(homework[index].deadline)),
+                        Expanded(flex: 6, child: Text(homework[index].contenu)),
+                        Text(classroom[homework[index].classroomId].name),
+                        Spacer(),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Checkbox(
+                                  value: homework[index].done,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      homework[index].done = newValue!;
+                                    });
+                                    if (newValue == true) {
+                                      checkBoxDone = Colors.black;
+                                    } else {
+                                      checkBoxDone = Colors.transparent;
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
-                            Spacer(),
-                            Expanded(
-                              child: IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () {},
+                              Spacer(),
+                              Expanded(
+                                child: IconButton(
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () {},
+                                ),
                               ),
-                            ),
-                            Spacer(),
-                            Expanded(
-                              child: IconButton(
-                                icon: const Icon(Icons.delete),
-                                color: Colors.red,
-                                onPressed: () {},
+                              Spacer(),
+                              Expanded(
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  color: Colors.red,
+                                  onPressed: () {},
+                                ),
                               ),
-                            ),
-                            Spacer(),
-                          ],
+                              Spacer(),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
