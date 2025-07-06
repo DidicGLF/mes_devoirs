@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mes_devoirs/Classes/classroom.dart';
 import 'package:mes_devoirs/Classes/homework.dart';
 
 class GetHomework extends StatefulWidget {
@@ -8,10 +9,12 @@ class GetHomework extends StatefulWidget {
 
 //Sample list to fill the listview
 List<Homework> homework = getHomeworkList();
+List<Classroom> classroom = getClassroomList();
 
 class InputState extends State<GetHomework> {
-  Color _color = Colors.transparent;
+  Color _color = Colors.white;
   Color checkBoxDone = Colors.black;
+  int _classroomId = -1;
 
   // Create textfield controller
   final TextEditingController _homeworkCreationDate = TextEditingController();
@@ -29,121 +32,40 @@ class InputState extends State<GetHomework> {
         child: Column(
           spacing: 20,
           children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _color = Colors.blue.shade400;
-                      });
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: classroom.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      _color = classroom[index].color;
+                      _classroomId = classroom[index].classroomId;
                     },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
+                    child: Card(
+                      elevation: 3,
+                      color: classroom[index].color,
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              classroom[index].name,
+                            ),
+                            Text(
+                              style: TextStyle(fontSize: 12),
+                              classroom[index].classroomSize.toString(),
+                            ),
+                          ],
+                        ),
                       ),
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.blue,
-                      textStyle: TextStyle(fontSize: 14),
                     ),
-                    child: Text("Classe 1"),
-                  ),
-                  Spacer(flex: 1),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _color = Colors.green.shade400;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.green,
-                      textStyle: TextStyle(fontSize: 14),
-                    ),
-                    child: Text("Classe 2"),
-                  ),
-                  Spacer(flex: 1),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _color = Colors.red.shade400;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.red,
-                      textStyle: TextStyle(fontSize: 14),
-                    ),
-                    child: Text("Classe 3"),
-                  ),
-                  Spacer(flex: 1),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _color = Colors.yellow.shade400;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.yellow,
-                      textStyle: TextStyle(fontSize: 14),
-                    ),
-                    child: Text("Classe 4"),
-                  ),
-                  Spacer(flex: 1),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _color = Colors.pink.shade400;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.pink,
-                      textStyle: TextStyle(fontSize: 14),
-                    ),
-                    child: Text("Classe 5"),
-                  ),
-                  Spacer(flex: 1),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _color = Colors.purple.shade400;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.purple,
-                      textStyle: TextStyle(fontSize: 14),
-                    ),
-                    child: Text("Classe 6"),
-                  ),
-                  Spacer(),
-                ],
+                  );
+                },
               ),
             ),
 
@@ -152,11 +74,7 @@ class InputState extends State<GetHomework> {
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(9)),
                 border: Border.all(color: Colors.black, width: 1),
-                gradient: LinearGradient(
-                  colors: [_color, _color],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: _color,
               ),
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.only(right: 20, left: 20),
@@ -234,18 +152,13 @@ class InputState extends State<GetHomework> {
                           creationDate: _homeworkCreationDate.text,
                           deadline: _homeworkDeadline.text,
                           contenu: _homeworkContenu.text,
-                          classroom: "6eme A",
+                          classroomId: _classroomId,
                         );
 
                         setState(() {
                           homework.add(newHomework);
                         });
                       }
-
-                      //Temporary print test
-                      /*print(
-                        "Devoir  fait : ${newHomework.done},  date  de  création :  ${newHomework.creationDate},  échéance :  ${newHomework.deadline}, contenu du devoir :  ${newHomework.contenu}, pour la classe de ${newHomework.classroom}",
-                      );*/
                       _homeworkCreationDate.clear();
                       _homeworkDeadline.clear();
                       _homeworkContenu.clear();
@@ -274,37 +187,49 @@ class InputState extends State<GetHomework> {
                   color: _color,
                   child: Row(
                     children: [
-                      Icon(Icons.check, color: checkBoxDone),
-                      Spacer(),
-                      Text(homework[index].creationDate),
-                      Spacer(),
-                      Text(homework[index].deadline),
-                      Spacer(),
+                      Expanded(child: Icon(Icons.check, color: checkBoxDone)),
+                      Expanded(child: Text(homework[index].creationDate)),
+                      Expanded(child: Text(homework[index].deadline)),
                       Expanded(flex: 6, child: Text(homework[index].contenu)),
+                      Text(homework[index].classroomId.toString()),
                       Spacer(),
-                      Checkbox(
-                        value: homework[index].done,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            homework[index].done = newValue!;
-                          });
-                          if (newValue == true) {
-                            checkBoxDone = Colors.white;
-                          } else {
-                            checkBoxDone = Colors.transparent;
-                          }
-                        },
-                      ),
-                      Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {},
-                      ),
-                      Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        color: Colors.red,
-                        onPressed: () {},
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Checkbox(
+                                value: homework[index].done,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    homework[index].done = newValue!;
+                                  });
+                                  if (newValue == true) {
+                                    checkBoxDone = Colors.black;
+                                  } else {
+                                    checkBoxDone = Colors.transparent;
+                                  }
+                                },
+                              ),
+                            ),
+                            Spacer(),
+                            Expanded(
+                              child: IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {},
+                              ),
+                            ),
+                            Spacer(),
+                            Expanded(
+                              child: IconButton(
+                                icon: const Icon(Icons.delete),
+                                color: Colors.red,
+                                onPressed: () {},
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ],
                   ),
