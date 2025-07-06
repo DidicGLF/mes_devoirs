@@ -1,17 +1,26 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mes_devoirs/Classes/homework.dart';
 
 class GetHomework extends StatefulWidget {
   @override
-  inputState createState() => inputState();
+  InputState createState() => InputState();
 }
 
 //Sample list to fill the listview
 List<Homework> homework = getHomeworkList();
 
-class inputState extends State<GetHomework> {
+class InputState extends State<GetHomework> {
   Color _color = Colors.transparent;
-  Color checkBoxDone = Colors.transparent;
+  Color checkBoxDone = Colors.black;
+
+  // Create textfield controller
+  TextEditingController _homeworkCreationDate = TextEditingController();
+  TextEditingController _homeworkDeadline = TextEditingController();
+  TextEditingController _homeworkContenu = TextEditingController();
+
+  // Variable for new homework
+  String homeworkClassroom = "";
 
   @override
   Widget build(BuildContext context) {
@@ -160,6 +169,7 @@ class inputState extends State<GetHomework> {
                     width: 200,
                     height: 40,
                     child: TextField(
+                      controller: _homeworkCreationDate,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.calendar_month),
@@ -177,6 +187,7 @@ class inputState extends State<GetHomework> {
                     width: 200,
                     height: 40,
                     child: TextField(
+                      controller: _homeworkDeadline,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.alarm),
@@ -195,6 +206,7 @@ class inputState extends State<GetHomework> {
                     width: 300,
                     height: 40,
                     child: TextField(
+                      controller: _homeworkContenu,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.notes),
@@ -207,7 +219,40 @@ class inputState extends State<GetHomework> {
                     ),
                   ),
                   Spacer(),
-                  ElevatedButton(onPressed: () {}, child: Text("Valider")),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_homeworkCreationDate.text == "" ||
+                          _homeworkDeadline.text == "" ||
+                          _homeworkContenu.text == "") {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Veuillez remplir tous les champs"),
+                          ),
+                        );
+                      } else {
+                        Homework newHomework = Homework(
+                          done: false,
+                          creationDate: _homeworkCreationDate.text,
+                          deadline: _homeworkDeadline.text,
+                          contenu: _homeworkContenu.text,
+                          classroom: "6eme A",
+                        );
+
+                        setState(() {
+                          homework.add(newHomework);
+                        });
+                      }
+
+                      //Temporary print test
+                      /*print(
+                        "Devoir  fait : ${newHomework.done},  date  de  création :  ${newHomework.creationDate},  échéance :  ${newHomework.deadline}, contenu du devoir :  ${newHomework.contenu}, pour la classe de ${newHomework.classroom}",
+                      );*/
+                      _homeworkCreationDate.clear();
+                      _homeworkDeadline.clear();
+                      _homeworkContenu.clear();
+                    },
+                    child: Text("Valider"),
+                  ),
                   Spacer(),
                 ],
               ),
@@ -219,24 +264,15 @@ class inputState extends State<GetHomework> {
               shrinkWrap: true,
               itemCount: homework.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [_color, _color],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(9)),
-                    border: Border.all(color: _color, width: 2),
-                    color: const Color.fromARGB(255, 219, 213, 213),
-                  ),
-                  padding: EdgeInsets.all(2),
+                return Card(
                   margin: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
                     right: 20,
                     left: 20,
+                    top: 5,
+                    bottom: 5,
                   ),
+                  elevation: 3,
+                  color: _color,
                   child: Row(
                     children: [
                       Icon(Icons.check, color: checkBoxDone),
@@ -245,7 +281,7 @@ class inputState extends State<GetHomework> {
                       Spacer(),
                       Text(homework[index].deadline),
                       Spacer(),
-                      Text(homework[index].contenu),
+                      Expanded(child: Text(homework[index].contenu), flex: 6),
                       Spacer(),
                       Checkbox(
                         value: homework[index].done,
