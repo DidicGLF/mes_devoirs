@@ -201,53 +201,79 @@ class InputState extends State<GetHomework> {
                     ),
                     elevation: 3,
                     color: classroom[homework[index].classroomId].color,
-                    child: Row(
-                      children: [
-                        Expanded(child: Icon(Icons.check, color: checkBoxDone)),
-                        Expanded(child: Text(homework[index].creationDate)),
-                        Expanded(child: Text(homework[index].deadline)),
-                        Expanded(flex: 6, child: Text(homework[index].contenu)),
-                        Text(classroom[homework[index].classroomId].name),
-                        Spacer(),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                child: Checkbox(
-                                  value: homework[index].done,
-                                  onChanged: (bool? newValue) {
-                                    setState(() {
-                                      homework[index].done = newValue!;
-                                    });
-                                    if (newValue == true) {
-                                      checkBoxDone = Colors.black;
-                                    } else {
-                                      checkBoxDone = Colors.transparent;
-                                    }
-                                  },
-                                ),
-                              ),
-                              Spacer(),
-                              Expanded(
-                                child: IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Spacer(),
-                              Expanded(
-                                child: IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  color: Colors.red,
-                                  onPressed: () {},
-                                ),
-                              ),
-                              Spacer(),
-                            ],
+                    child: InkWell(
+                      onTap: () {},
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Icon(Icons.check, color: checkBoxDone),
                           ),
-                        ),
-                      ],
+                          Expanded(child: Text(homework[index].creationDate)),
+                          Expanded(child: Text(homework[index].deadline)),
+                          Expanded(
+                            flex: 6,
+                            child: Text(homework[index].contenu),
+                          ),
+                          Text(classroom[homework[index].classroomId].name),
+                          Spacer(),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Checkbox(
+                                    value: homework[index].done,
+                                    onChanged: (bool? newValue) {
+                                      setState(() {
+                                        homework[index].done = newValue!;
+                                      });
+                                      if (newValue == true) {
+                                        checkBoxDone = Colors.black;
+                                      } else {
+                                        checkBoxDone = Colors.transparent;
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: IconButton(
+                                    icon: Icon(Icons.edit, color: Colors.black),
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                //Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        homework.removeAt(index);
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
