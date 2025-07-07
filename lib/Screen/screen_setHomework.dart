@@ -92,7 +92,11 @@ class InputState extends State<GetHomework> {
               margin: EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 children: [
-                  Text("Date de création : "),
+                  Spacer(),
+                  Text(
+                    "Date de création : ",
+                    style: TextStyle(color: Colors.black),
+                  ),
                   Spacer(flex: 1),
                   SizedBox(
                     width: 200,
@@ -102,7 +106,10 @@ class InputState extends State<GetHomework> {
                       focusNode: _homeworkCreationDateFocusNode,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.calendar_month),
+                        prefixIcon: Icon(
+                          Icons.calendar_month,
+                          color: Colors.black,
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
@@ -111,7 +118,7 @@ class InputState extends State<GetHomework> {
                     ),
                   ),
                   Spacer(flex: 1),
-                  Text("Échéance : "),
+                  Text("Échéance : ", style: TextStyle(color: Colors.black)),
                   Spacer(flex: 1),
                   SizedBox(
                     width: 200,
@@ -120,7 +127,7 @@ class InputState extends State<GetHomework> {
                       controller: _homeworkDeadline,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.alarm),
+                        prefixIcon: Icon(Icons.alarm, color: Colors.black),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
@@ -130,7 +137,7 @@ class InputState extends State<GetHomework> {
                     ),
                   ),
                   Spacer(flex: 1),
-                  Text("Contenu : "),
+                  Text("Contenu : ", style: TextStyle(color: Colors.black)),
                   Spacer(flex: 1),
                   SizedBox(
                     width: 300,
@@ -139,7 +146,7 @@ class InputState extends State<GetHomework> {
                       controller: _homeworkContenu,
                       style: const TextStyle(fontSize: 12),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.notes),
+                        prefixIcon: Icon(Icons.notes, color: Colors.black),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
