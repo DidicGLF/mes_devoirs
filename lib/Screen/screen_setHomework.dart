@@ -200,12 +200,14 @@ class InputState extends State<GetHomework> {
 
             //Homework list
             Expanded(
-              child: ListView.builder(
+              child: ReorderableListView.builder(
+                buildDefaultDragHandles: false,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: homework.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
+                    key: ValueKey(homework[index]),
                     margin: EdgeInsets.only(
                       right: 20,
                       left: 20,
@@ -222,9 +224,20 @@ class InputState extends State<GetHomework> {
                       },
                       child: Row(
                         children: [
+                          //drag icon
+                          ReorderableDragStartListener(
+                            index: index,
+                            child: Container(
+                              width: 30,
+                              child: Icon(
+                                Icons.drag_handle,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
                           //Check icon
                           Container(
-                            width: 100,
+                            width: 70,
                             child:
                                 homework[index].done
                                     ? Icon(Icons.check, color: Colors.black)
@@ -314,6 +327,15 @@ class InputState extends State<GetHomework> {
                       ),
                     ),
                   );
+                },
+                onReorder: (int oldIndex, int newIndex) {
+                  setState(() {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    final item = homework.removeAt(oldIndex);
+                    homework.insert(newIndex, item);
+                  });
                 },
               ),
             ),
