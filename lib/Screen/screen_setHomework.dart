@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mes_devoirs/Classes/classroom.dart';
 import 'package:mes_devoirs/Classes/homework.dart';
 
@@ -118,7 +121,7 @@ class InputState extends State<GetHomework> {
                     ),
                   ),
                   Spacer(flex: 1),
-                  Text("Échéance : ", style: TextStyle(color: Colors.black)),
+                  Text("Pour le : ", style: TextStyle(color: Colors.black)),
                   Spacer(flex: 1),
                   SizedBox(
                     width: 200,
@@ -180,6 +183,9 @@ class InputState extends State<GetHomework> {
                           homework.add(newHomework);
                         });
                         _homeworkCreationDateFocusNode.requestFocus();
+
+                        String JsonString = jsonEncode(newHomework.toJson());
+                        debugPrint(JsonString);
                       }
                       _homeworkCreationDate.clear();
                       _homeworkDeadline.clear();
@@ -209,73 +215,98 @@ class InputState extends State<GetHomework> {
                     elevation: 3,
                     color: classroom[homework[index].classroomId].color,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Clipboard.setData(
+                          ClipboardData(text: homework[index].contenu),
+                        );
+                      },
                       child: Row(
                         children: [
-                          Expanded(
-                            child: Icon(Icons.check, color: checkBoxDone),
+                          //Check icon
+                          Container(
+                            width: 100,
+                            child:
+                                homework[index].done
+                                    ? Icon(Icons.check, color: Colors.black)
+                                    : SizedBox.shrink(),
                           ),
-                          Expanded(child: Text(homework[index].creationDate)),
-                          Expanded(child: Text(homework[index].deadline)),
-                          Expanded(
-                            flex: 6,
-                            child: Text(homework[index].contenu),
+                          //Creation Date
+                          Container(
+                            width: 130,
+                            child: Text(
+                              homework[index].creationDate,
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ),
-                          Text(classroom[homework[index].classroomId].name),
-                          Spacer(),
+                          //deadline
+                          Container(
+                            width: 230,
+                            child: Text(
+                              "Pour le : ${homework[index].deadline}",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          //contenu
                           Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                homework[index].contenu,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ),
+                          //Classroom
+                          Container(
+                            width: 80,
+                            child: Text(
+                              classroom[homework[index].classroomId].name,
+                              style: TextStyle(fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          //Command to the right
+                          Container(
+                            width: 180,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Expanded(
-                                  child: Checkbox(
-                                    value: homework[index].done,
-                                    onChanged: (bool? newValue) {
-                                      setState(() {
-                                        homework[index].done = newValue!;
-                                      });
-                                      if (newValue == true) {
-                                        checkBoxDone = Colors.black;
-                                      } else {
-                                        checkBoxDone = Colors.transparent;
-                                      }
-                                    },
-                                  ),
+                                // Checkbox
+                                Checkbox(
+                                  value: homework[index].done,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      homework[index].done = newValue!;
+                                    });
+                                  },
                                 ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.all(1.0),
-                                  child: IconButton(
-                                    icon: Icon(Icons.edit, color: Colors.black),
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
+
+                                // Edit button
+                                IconButton(
+                                  icon: Icon(Icons.edit, color: Colors.black),
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                 ),
-                                //Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.all(1.0),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        homework.removeAt(index);
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
+
+                                // Delete button
+                                IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.black),
+                                  onPressed: () {
+                                    setState(() {
+                                      homework.removeAt(index);
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                 ),
-                                Spacer(),
                               ],
                             ),
                           ),

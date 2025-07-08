@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Homework {
   bool done;
   String creationDate;
@@ -12,6 +14,16 @@ class Homework {
     required this.contenu,
     required this.classroomId,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'done': done,
+      'creationDate': creationDate,
+      'deadline': deadline,
+      'contenu': contenu,
+      'classroomId': classroomId,
+    };
+  }
 }
 
 List<Homework> getHomeworkList() {
