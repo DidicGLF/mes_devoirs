@@ -15,7 +15,7 @@ List<Homework> homework = getHomeworkList();
 List<Classroom> classroom = getClassroomList();
 
 class InputState extends State<GetHomework> {
-  Color _color = Colors.white;
+  Color _color = Colors.white12;
   Color checkBoxDone = Colors.black;
   int _classroomId = -1;
 
@@ -162,7 +162,7 @@ class InputState extends State<GetHomework> {
                   ElevatedButton(
                     onPressed: () {
                       if (_homeworkCreationDate.text == "" ||
-                          _homeworkDeadline.text == "" ||
+                          /*_homeworkDeadline.text == "" ||*/
                           _homeworkContenu.text == "" ||
                           _classroomId == -1) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -184,12 +184,15 @@ class InputState extends State<GetHomework> {
                         });
                         _homeworkCreationDateFocusNode.requestFocus();
 
-                        String JsonString = jsonEncode(newHomework.toJson());
-                        debugPrint(JsonString);
+                        //Encode to Json and save
+                        //String jsonString = jsonEncode(newHomework.toJson());
+
+                        //debugPrint(jsonString);
+
+                        //Clear input field
+                        _homeworkDeadline.clear();
+                        _homeworkContenu.clear();
                       }
-                      _homeworkCreationDate.clear();
-                      _homeworkDeadline.clear();
-                      _homeworkContenu.clear();
                     },
                     child: Text("Valider"),
                   ),
@@ -207,7 +210,7 @@ class InputState extends State<GetHomework> {
                 itemCount: homework.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    key: ValueKey(homework[index]),
+                    key: ValueKey(homework[index]), //for reorganisable list
                     margin: EdgeInsets.only(
                       right: 20,
                       left: 20,
@@ -231,7 +234,7 @@ class InputState extends State<GetHomework> {
                               width: 30,
                               child: Icon(
                                 Icons.drag_handle,
-                                color: Colors.black54,
+                                color: Colors.black38,
                               ),
                             ),
                           ),

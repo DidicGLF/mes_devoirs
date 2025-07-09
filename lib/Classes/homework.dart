@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
+import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Homework {
   bool done;
@@ -14,16 +18,6 @@ class Homework {
     required this.contenu,
     required this.classroomId,
   });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'done': done,
-      'creationDate': creationDate,
-      'deadline': deadline,
-      'contenu': contenu,
-      'classroomId': classroomId,
-    };
-  }
 }
 
 List<Homework> getHomeworkList() {
