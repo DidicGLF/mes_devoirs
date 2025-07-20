@@ -1,4 +1,4 @@
-import 'dart:convert';
+//import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -87,15 +87,36 @@ class InputState extends State<GetHomework> {
             //Homework input
             Container(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(9)),
-                border: Border.all(color: Colors.black, width: 1),
-                color: _color,
+                //borderRadius: const BorderRadius.all(Radius.circular(9)),
+                //border: Border.all(color: Colors.black, width: 1),
+                //color: _color,
               ),
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.only(right: 20, left: 20),
-              child: Row(
+              /*child: Row(
                 children: [
-                  Spacer(),
+                  RotatedBox(
+                    quarterTurns: 3,
+                    child:
+                        _classroomId > -1
+                            ? Text(
+                              classroom[_classroomId].name,
+                              style: TextStyle(
+                                //backgroundColor: Colors.black,
+                                color: Colors.black,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            )
+                            : Text(
+                              "",
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                  ),
+                  Container(width: 30),
                   Text(
                     "Date de création : ",
                     style: TextStyle(color: Colors.black),
@@ -184,11 +205,6 @@ class InputState extends State<GetHomework> {
                         });
                         _homeworkCreationDateFocusNode.requestFocus();
 
-                        //Encode to Json and save
-                        //String jsonString = jsonEncode(newHomework.toJson());
-
-                        //debugPrint(jsonString);
-
                         //Clear input field
                         _homeworkDeadline.clear();
                         _homeworkContenu.clear();
@@ -198,6 +214,126 @@ class InputState extends State<GetHomework> {
                   ),
                   Spacer(),
                 ],
+              ),*/
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: _color,
+                  labelText:
+                      _classroomId > -1
+                          ? classroom[_classroomId].name
+                          : "Sélectionnez une classe",
+                  labelStyle: TextStyle(
+                    fontFeatures: [FontFeature.superscripts()],
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(width: 30),
+                    Text(
+                      "Date de création : ",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Spacer(flex: 1),
+                    SizedBox(
+                      width: 200,
+                      height: 40,
+                      child: TextField(
+                        controller: _homeworkCreationDate,
+                        focusNode: _homeworkCreationDateFocusNode,
+                        style: const TextStyle(fontSize: 12),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.calendar_month,
+                            color: Colors.black,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          hintText: "Saisissez une date",
+                        ),
+                      ),
+                    ),
+                    Spacer(flex: 1),
+                    Text("Pour le : ", style: TextStyle(color: Colors.black)),
+                    Spacer(flex: 1),
+                    SizedBox(
+                      width: 200,
+                      height: 40,
+                      child: TextField(
+                        controller: _homeworkDeadline,
+                        style: const TextStyle(fontSize: 12),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.alarm, color: Colors.black),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          border: OutlineInputBorder(),
+                          hintText: "Saisissez une date",
+                        ),
+                      ),
+                    ),
+                    Spacer(flex: 1),
+                    Text("Contenu : ", style: TextStyle(color: Colors.black)),
+                    Spacer(flex: 1),
+                    SizedBox(
+                      width: 300,
+                      height: 40,
+                      child: TextField(
+                        controller: _homeworkContenu,
+                        style: const TextStyle(fontSize: 12),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.notes, color: Colors.black),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          border: OutlineInputBorder(),
+                          hintText: "Saisissez le contenu",
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_homeworkCreationDate.text == "" ||
+                            /*_homeworkDeadline.text == "" ||*/
+                            _homeworkContenu.text == "" ||
+                            _classroomId == -1) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Veuillez remplir tous les champs"),
+                            ),
+                          );
+                        } else {
+                          Homework newHomework = Homework(
+                            done: false,
+                            creationDate: _homeworkCreationDate.text,
+                            deadline: _homeworkDeadline.text,
+                            contenu: _homeworkContenu.text,
+                            classroomId: _classroomId,
+                          );
+
+                          setState(() {
+                            homework.add(newHomework);
+                          });
+                          _homeworkCreationDateFocusNode.requestFocus();
+
+                          //Clear input field
+                          _homeworkDeadline.clear();
+                          _homeworkContenu.clear();
+                        }
+                      },
+                      child: Text("Valider"),
+                    ),
+                    Spacer(),
+                  ],
+                ),
               ),
             ),
 
@@ -230,7 +366,7 @@ class InputState extends State<GetHomework> {
                           //drag icon
                           ReorderableDragStartListener(
                             index: index,
-                            child: Container(
+                            child: SizedBox(
                               width: 30,
                               child: Icon(
                                 Icons.drag_handle,
@@ -239,7 +375,7 @@ class InputState extends State<GetHomework> {
                             ),
                           ),
                           //Check icon
-                          Container(
+                          SizedBox(
                             width: 70,
                             child:
                                 homework[index].done
@@ -247,7 +383,7 @@ class InputState extends State<GetHomework> {
                                     : SizedBox.shrink(),
                           ),
                           //Creation Date
-                          Container(
+                          SizedBox(
                             width: 130,
                             child: Text(
                               homework[index].creationDate,
@@ -255,7 +391,7 @@ class InputState extends State<GetHomework> {
                             ),
                           ),
                           //deadline
-                          Container(
+                          SizedBox(
                             width: 230,
                             child: Text(
                               "Pour le : ${homework[index].deadline}",
@@ -274,7 +410,7 @@ class InputState extends State<GetHomework> {
                             ),
                           ),
                           //Classroom
-                          Container(
+                          SizedBox(
                             width: 80,
                             child: Text(
                               classroom[homework[index].classroomId].name,
@@ -283,7 +419,7 @@ class InputState extends State<GetHomework> {
                             ),
                           ),
                           //Command to the right
-                          Container(
+                          SizedBox(
                             width: 180,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
