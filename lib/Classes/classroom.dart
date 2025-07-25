@@ -52,6 +52,12 @@ List<Classroom> getClassroomList() {
       color: Colors.purple,
       classroomSize: 25,
     ),
+    Classroom(
+      classroomId: 6,
+      name: "Midi",
+      color: Colors.white,
+      classroomSize: 0,
+    ),
   ];
   return classroom;
 }

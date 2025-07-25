@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+//import 'package:mes_devoirs/Classes/schedule.dart';
+//import 'package:mes_devoirs/Screen/screen_setHomework.dart';
+//import 'package:path/path.dart';
 
-class Edt extends StatelessWidget {
-  const Edt({super.key});
+class GetSchedule extends StatefulWidget {
+  const GetSchedule({super.key});
 
+  @override
+  _GetScheduleState createState() => _GetScheduleState();
+}
+
+class _GetScheduleState extends State<GetSchedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Emploi du temps')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
+      body: Expanded(child: Container()),
     );
   }
 }

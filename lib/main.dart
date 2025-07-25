@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mes_devoirs/Screen/screen_setHomework.dart';
+import 'package:mes_devoirs/Screen/screen_sethomework.dart';
 import 'package:mes_devoirs/Screen/screen_settings.dart';
 import 'package:mes_devoirs/Screen/screen_schedule.dart';
 
@@ -67,7 +67,7 @@ class MainApp extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Edt()),
+                        MaterialPageRoute(builder: (context) => GetSchedule()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,11 +1,12 @@
 //import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mes_devoirs/Classes/classroom.dart';
 import 'package:mes_devoirs/Classes/homework.dart';
 
 class GetHomework extends StatefulWidget {
+  const GetHomework({super.key});
+
   @override
   InputState createState() => InputState();
 }
@@ -33,6 +34,7 @@ class InputState extends State<GetHomework> {
         child: Column(
           spacing: 20,
           children: [
+            //Classroom list
             SizedBox(
               height: 100,
               child: ListView.builder(
@@ -86,135 +88,8 @@ class InputState extends State<GetHomework> {
 
             //Homework input
             Container(
-              decoration: BoxDecoration(
-                //borderRadius: const BorderRadius.all(Radius.circular(9)),
-                //border: Border.all(color: Colors.black, width: 1),
-                //color: _color,
-              ),
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.only(right: 20, left: 20),
-              /*child: Row(
-                children: [
-                  RotatedBox(
-                    quarterTurns: 3,
-                    child:
-                        _classroomId > -1
-                            ? Text(
-                              classroom[_classroomId].name,
-                              style: TextStyle(
-                                //backgroundColor: Colors.black,
-                                color: Colors.black,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            )
-                            : Text(
-                              "",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                  ),
-                  Container(width: 30),
-                  Text(
-                    "Date de création : ",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  Spacer(flex: 1),
-                  SizedBox(
-                    width: 200,
-                    height: 40,
-                    child: TextField(
-                      controller: _homeworkCreationDate,
-                      focusNode: _homeworkCreationDateFocusNode,
-                      style: const TextStyle(fontSize: 12),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.calendar_month,
-                          color: Colors.black,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        hintText: "Saisissez une date",
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  Text("Pour le : ", style: TextStyle(color: Colors.black)),
-                  Spacer(flex: 1),
-                  SizedBox(
-                    width: 200,
-                    height: 40,
-                    child: TextField(
-                      controller: _homeworkDeadline,
-                      style: const TextStyle(fontSize: 12),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.alarm, color: Colors.black),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        border: OutlineInputBorder(),
-                        hintText: "Saisissez une date",
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  Text("Contenu : ", style: TextStyle(color: Colors.black)),
-                  Spacer(flex: 1),
-                  SizedBox(
-                    width: 300,
-                    height: 40,
-                    child: TextField(
-                      controller: _homeworkContenu,
-                      style: const TextStyle(fontSize: 12),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.notes, color: Colors.black),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        border: OutlineInputBorder(),
-                        hintText: "Saisissez le contenu",
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_homeworkCreationDate.text == "" ||
-                          /*_homeworkDeadline.text == "" ||*/
-                          _homeworkContenu.text == "" ||
-                          _classroomId == -1) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Veuillez remplir tous les champs"),
-                          ),
-                        );
-                      } else {
-                        Homework newHomework = Homework(
-                          done: false,
-                          creationDate: _homeworkCreationDate.text,
-                          deadline: _homeworkDeadline.text,
-                          contenu: _homeworkContenu.text,
-                          classroomId: _classroomId,
-                        );
-
-                        setState(() {
-                          homework.add(newHomework);
-                        });
-                        _homeworkCreationDateFocusNode.requestFocus();
-
-                        //Clear input field
-                        _homeworkDeadline.clear();
-                        _homeworkContenu.clear();
-                      }
-                    },
-                    child: Text("Valider"),
-                  ),
-                  Spacer(),
-                ],
-              ),*/
               child: InputDecorator(
                 decoration: InputDecoration(
                   filled: true,
@@ -224,7 +99,6 @@ class InputState extends State<GetHomework> {
                           ? classroom[_classroomId].name
                           : "Sélectionnez une classe",
                   labelStyle: TextStyle(
-                    fontFeatures: [FontFeature.superscripts()],
                     fontWeight: FontWeight.w900,
                     fontStyle: FontStyle.italic,
                     color: Colors.black,
