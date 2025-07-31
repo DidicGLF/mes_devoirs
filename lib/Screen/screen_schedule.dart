@@ -15,7 +15,7 @@ class _GetScheduleState extends State<GetSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Emploi du temps')),
-      body: Expanded(child: Container()),
+      body: Center(child: Text("Ici l'emploi du temps")),
     );
   }
 }

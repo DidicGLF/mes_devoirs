@@ -4,7 +4,7 @@ import 'package:mes_devoirs/Screen/screen_settings.dart';
 import 'package:mes_devoirs/Screen/screen_schedule.dart';
 
 void main() {
-  runApp(const MaterialApp(home: MainApp()));
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -13,72 +13,79 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, //Hide debug banner
-      home: Scaffold(
-        appBar: AppBar(title: const Text("Accueil")),
-        body: Center(
-          child: SizedBox(
-            width: 500,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Tooltip(
-                  message: 'Saisie des devoirs',
-                  margin: const EdgeInsets.all(15),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => GetHomework()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      iconSize: 30,
-                    ),
-                    child: const Icon(Icons.edit),
-                  ),
-                ),
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
+    );
+  }
+}
 
-                Tooltip(
-                  message: 'Gestion',
-                  margin: const EdgeInsets.all(15),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Gestion(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      iconSize: 30,
-                    ),
-                    child: Icon(Icons.settings),
-                  ),
-                ),
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
-                Tooltip(
-                  message: 'Emploi du temps',
-                  margin: const EdgeInsets.all(15),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => GetSchedule()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 70),
-                      iconSize: 30,
-                    ),
-                    child: Icon(Icons.calendar_month),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Accueil")),
+      body: Center(
+        child: SizedBox(
+          width: 500,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Tooltip(
+                message: 'Saisie des devoirs',
+                margin: const EdgeInsets.all(15),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GetHomework()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(100, 70),
+                    iconSize: 30,
                   ),
+                  child: const Icon(Icons.edit),
                 ),
-              ],
-            ),
+              ),
+
+              Tooltip(
+                message: 'Gestion',
+                margin: const EdgeInsets.all(15),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Gestion()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(100, 70),
+                    iconSize: 30,
+                  ),
+                  child: Icon(Icons.settings),
+                ),
+              ),
+
+              Tooltip(
+                message: 'Emploi du temps',
+                margin: const EdgeInsets.all(15),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GetSchedule()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(100, 70),
+                    iconSize: 30,
+                  ),
+                  child: Icon(Icons.calendar_month),
+                ),
+              ),
+            ],
           ),
         ),
       ),

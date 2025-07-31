@@ -1,4 +1,3 @@
-//import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mes_devoirs/Classes/classroom.dart';
@@ -12,13 +11,194 @@ class GetHomework extends StatefulWidget {
 }
 
 //Sample list to fill the listview
-List<Homework> homework = getHomeworkList();
+//List<Homework> homework = getHomeworkList();
+
 List<Classroom> classroom = getClassroomList();
 
 class InputState extends State<GetHomework> {
   Color _color = Colors.white12;
   Color checkBoxDone = Colors.black;
   int _classroomId = -1;
+
+  List<Homework> homework = [];
+
+  void initState() {
+    super.initState();
+    loadExistingHomework();
+  }
+
+  void loadExistingHomework() async {
+    List<Homework> existingHomework = await Homework.loadHomeworkList(
+      Homework.getDefaultFilePath(),
+    );
+    setState(() {
+      homework = existingHomework;
+    });
+  }
+
+  void editHomework(int index) {
+    final TextEditingController contenuController = TextEditingController(
+      text: homework[index].contenu,
+    );
+    final TextEditingController deadlineController = TextEditingController(
+      text: homework[index].deadline,
+    );
+
+    int selectedClassroomId = homework[index].classroomId;
+    String? errorMessage;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              title: Text('Modifier le devoir'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Message d'erreur
+                    if (errorMessage != null)
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(12),
+                        margin: EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade50,
+                          border: Border.all(color: Colors.red.shade200),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          errorMessage!,
+                          style: TextStyle(
+                            color: Colors.red.shade700,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+
+                    // Champ contenu
+                    TextField(
+                      controller: contenuController,
+                      decoration: InputDecoration(
+                        labelText: 'Contenu du devoir',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 3,
+                    ),
+                    SizedBox(height: 16),
+
+                    // Champ deadline
+                    TextField(
+                      controller: deadlineController,
+                      decoration: InputDecoration(
+                        labelText: 'Deadline',
+                        border: OutlineInputBorder(),
+                        hintText:
+                            'Ex: Vendredi prochain, Dans 2 semaines, 15/12/2024...',
+                      ),
+                    ),
+                    SizedBox(height: 16),
+
+                    // Dropdown pour la classe
+                    DropdownButtonFormField<int>(
+                      value: selectedClassroomId,
+                      decoration: InputDecoration(
+                        labelText: 'Classe',
+                        border: OutlineInputBorder(),
+                      ),
+                      items:
+                          classroom.asMap().entries.map((entry) {
+                            int classroomId = entry.key;
+                            var classroomData = entry.value;
+                            return DropdownMenuItem<int>(
+                              value: classroomId,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: classroomData.color,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  classroomData.name,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                      onChanged: (int? newValue) {
+                        setDialogState(() {
+                          selectedClassroomId = newValue!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                // Bouton Annuler
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Annuler'),
+                ),
+
+                // Bouton Sauvegarder
+                ElevatedButton(
+                  onPressed: () {
+                    // Validation
+                    if (contenuController.text.trim().isEmpty) {
+                      setDialogState(() {
+                        errorMessage = 'Le contenu ne peut pas être vide';
+                      });
+                      return;
+                    }
+
+                    if (deadlineController.text.trim().isEmpty) {
+                      setDialogState(() {
+                        errorMessage = 'La deadline ne peut pas être vide';
+                      });
+                      return;
+                    }
+
+                    // Mettre à jour le devoir
+                    setState(() {
+                      homework[index].contenu = contenuController.text.trim();
+                      homework[index].deadline = deadlineController.text.trim();
+                      homework[index].classroomId = selectedClassroomId;
+                    });
+
+                    // Sauvegarder
+                    Homework.saveHomeworkList(
+                      homework,
+                      Homework.getDefaultFilePath(),
+                    );
+
+                    // Fermer le dialog
+                    Navigator.of(context).pop();
+
+                    // Message de confirmation
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Devoir modifié avec succès')),
+                    );
+                  },
+                  child: Text('Sauvegarder'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
 
   // Create textfield controller + focusNode
   final TextEditingController _homeworkCreationDate = TextEditingController();
@@ -196,6 +376,10 @@ class InputState extends State<GetHomework> {
                           setState(() {
                             homework.add(newHomework);
                           });
+                          Homework.saveHomeworkList(
+                            homework,
+                            Homework.getDefaultFilePath(),
+                          );
                           _homeworkCreationDateFocusNode.requestFocus();
 
                           //Clear input field
@@ -304,6 +488,10 @@ class InputState extends State<GetHomework> {
                                   onChanged: (bool? newValue) {
                                     setState(() {
                                       homework[index].done = newValue!;
+                                      Homework.saveHomeworkList(
+                                        homework,
+                                        Homework.getDefaultFilePath(),
+                                      );
                                     });
                                   },
                                 ),
@@ -311,7 +499,9 @@ class InputState extends State<GetHomework> {
                                 // Edit button
                                 IconButton(
                                   icon: Icon(Icons.edit, color: Colors.black),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    editHomework(index);
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -325,6 +515,10 @@ class InputState extends State<GetHomework> {
                                   onPressed: () {
                                     setState(() {
                                       homework.removeAt(index);
+                                      Homework.saveHomeworkList(
+                                        homework,
+                                        Homework.getDefaultFilePath(),
+                                      );
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -348,6 +542,10 @@ class InputState extends State<GetHomework> {
                     }
                     final item = homework.removeAt(oldIndex);
                     homework.insert(newIndex, item);
+                    Homework.saveHomeworkList(
+                      homework,
+                      Homework.getDefaultFilePath(),
+                    );
                   });
                 },
               ),
